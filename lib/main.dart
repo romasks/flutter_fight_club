@@ -32,137 +32,20 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Column(
         children: [
           SizedBox(height: 40),
-          Row(
-            children: [
-              SizedBox(width: 16),
-              Expanded(child: Center(child: Text("You"))),
-              SizedBox(width: 12),
-              Expanded(child: Center(child: Text("Enemy"))),
-              SizedBox(width: 16),
-            ],
-          ),
-          SizedBox(height: 11),
-          Row(
-            children: [
-              SizedBox(width: 16),
-              Expanded(
-                child: Column(
-                  children: [
-                    Text("1"),
-                    SizedBox(height: 4),
-                    Text("1"),
-                    SizedBox(height: 4),
-                    Text("1"),
-                    SizedBox(height: 4),
-                    Text("1"),
-                    SizedBox(height: 4),
-                    Text("1"),
-                    SizedBox(height: 4),
-                  ],
-                ),
-              ),
-              SizedBox(width: 12),
-              Expanded(
-                child: Column(
-                  children: [
-                    Text("1"),
-                    SizedBox(height: 4),
-                    Text("1"),
-                    SizedBox(height: 4),
-                    Text("1"),
-                    SizedBox(height: 4),
-                    Text("1"),
-                    SizedBox(height: 4),
-                    Text("1"),
-                    SizedBox(height: 4),
-                  ],
-                ),
-              ),
-              SizedBox(width: 16),
-            ],
-          ),
+          GameResultInfo(),
           Expanded(child: SizedBox()),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(width: 16),
-              Expanded(
-                child: Column(
-                  children: [
-                    Text("Attack".toUpperCase()),
-                    SizedBox(height: 16),
-                    BodyPartButton(
-                        bodyPart: BodyPart.head,
-                        selected: attackingBodyPart == BodyPart.head,
-                        bodyPartSetter: _selectAttackingBodyPart),
-                    SizedBox(height: 16),
-                    BodyPartButton(
-                        bodyPart: BodyPart.torso,
-                        selected: attackingBodyPart == BodyPart.torso,
-                        bodyPartSetter: _selectAttackingBodyPart),
-                    SizedBox(height: 16),
-                    BodyPartButton(
-                        bodyPart: BodyPart.legs,
-                        selected: attackingBodyPart == BodyPart.legs,
-                        bodyPartSetter: _selectAttackingBodyPart),
-                  ],
-                ),
-              ),
-              SizedBox(width: 12),
-              Expanded(
-                child: Column(
-                  children: [
-                    Text("Defend".toUpperCase()),
-                    SizedBox(height: 16),
-                    BodyPartButton(
-                        bodyPart: BodyPart.head,
-                        selected: defendingBodyPart == BodyPart.head,
-                        bodyPartSetter: _selectDefendingBodyPart),
-                    SizedBox(height: 16),
-                    BodyPartButton(
-                        bodyPart: BodyPart.torso,
-                        selected: defendingBodyPart == BodyPart.torso,
-                        bodyPartSetter: _selectDefendingBodyPart),
-                    SizedBox(height: 16),
-                    BodyPartButton(
-                        bodyPart: BodyPart.legs,
-                        selected: defendingBodyPart == BodyPart.legs,
-                        bodyPartSetter: _selectDefendingBodyPart),
-                  ],
-                ),
-              ),
-              SizedBox(width: 16),
-            ],
+          ControlBattlePanel(
+            defendingBodyPart: defendingBodyPart,
+            selectDefendingBodyPart: _selectDefendingBodyPart,
+            attackingBodyPart: attackingBodyPart,
+            selectAttackingBodyPart: _selectAttackingBodyPart,
           ),
           SizedBox(height: 14),
-          Row(
-            children: [
-              SizedBox(width: 16),
-              Expanded(
-                child: GestureDetector(
-                  onTap: () => _clearAllButtons(),
-                  child: SizedBox(
-                    height: 40,
-                    child: ColoredBox(
-                      color: _allSelected()
-                          ? Colors.black87
-                          : Color.fromRGBO(0, 0, 0, 0.38),
-                      child: Center(
-                        child: Text(
-                          "Go".toUpperCase(),
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w900,
-                              color: Colors.white),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(width: 16),
-            ],
+          GoButton(
+            onTap: _onGoButtonClick,
+            color: attackingBodyPart == null || defendingBodyPart == null
+                ? Colors.black38
+                : Color.fromRGBO(0, 0, 0, 0.87),
           ),
           SizedBox(height: 40)
         ],
@@ -182,12 +65,8 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  bool _allSelected() {
-    return attackingBodyPart != null && defendingBodyPart != null;
-  }
-
-  void _clearAllButtons() {
-    if (_allSelected()) {
+  void _onGoButtonClick() {
+    if (attackingBodyPart != null && defendingBodyPart != null) {
       setState(() {
         attackingBodyPart = null;
         defendingBodyPart = null;
@@ -208,6 +87,142 @@ class BodyPart {
   @override
   String toString() {
     return 'BodyPart{name: $name}';
+  }
+}
+
+class GameResultInfo extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Row(
+          children: [
+            SizedBox(width: 16),
+            Expanded(child: Center(child: Text("You"))),
+            SizedBox(width: 12),
+            Expanded(child: Center(child: Text("Enemy"))),
+            SizedBox(width: 16),
+          ],
+        ),
+        SizedBox(height: 11),
+        Row(
+          children: [
+            SizedBox(width: 16),
+            LivesWidget(
+              overallLivesCount: 5,
+              currentLivesCount: 1,
+            ),
+            SizedBox(width: 12),
+            LivesWidget(
+              overallLivesCount: 5,
+              currentLivesCount: 3,
+            ),
+            SizedBox(width: 16),
+          ],
+        ),
+      ],
+    );
+  }
+}
+
+class LivesWidget extends StatelessWidget {
+  final int overallLivesCount;
+  final int currentLivesCount;
+
+  const LivesWidget({
+    Key? key,
+    required this.overallLivesCount,
+    required this.currentLivesCount,
+  })  : assert(overallLivesCount >= 1),
+        assert(currentLivesCount >= 0),
+        assert(currentLivesCount <= overallLivesCount),
+        super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Column(
+        children: List.generate(overallLivesCount, (index) {
+          if (index < currentLivesCount) {
+            return Text("1");
+          } else {
+            return Text("0");
+          }
+        }),
+      ),
+    );
+  }
+}
+
+class ControlBattlePanel extends StatelessWidget {
+  final BodyPart? defendingBodyPart;
+  final ValueSetter<BodyPart> selectDefendingBodyPart;
+
+  final BodyPart? attackingBodyPart;
+  final ValueSetter<BodyPart> selectAttackingBodyPart;
+
+  const ControlBattlePanel({
+    Key? key,
+    required this.defendingBodyPart,
+    required this.selectDefendingBodyPart,
+    required this.attackingBodyPart,
+    required this.selectAttackingBodyPart,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        SizedBox(width: 16),
+        Expanded(
+          child: Column(
+            children: [
+              Text("Attack".toUpperCase()),
+              SizedBox(height: 16),
+              BodyPartButton(
+                  bodyPart: BodyPart.head,
+                  selected: attackingBodyPart == BodyPart.head,
+                  bodyPartSetter: selectAttackingBodyPart),
+              SizedBox(height: 16),
+              BodyPartButton(
+                  bodyPart: BodyPart.torso,
+                  selected: attackingBodyPart == BodyPart.torso,
+                  bodyPartSetter: selectAttackingBodyPart),
+              SizedBox(height: 16),
+              BodyPartButton(
+                  bodyPart: BodyPart.legs,
+                  selected: attackingBodyPart == BodyPart.legs,
+                  bodyPartSetter: selectAttackingBodyPart),
+            ],
+          ),
+        ),
+        SizedBox(width: 12),
+        Expanded(
+          child: Column(
+            children: [
+              Text("Defend".toUpperCase()),
+              SizedBox(height: 16),
+              BodyPartButton(
+                  bodyPart: BodyPart.head,
+                  selected: defendingBodyPart == BodyPart.head,
+                  bodyPartSetter: selectDefendingBodyPart),
+              SizedBox(height: 16),
+              BodyPartButton(
+                  bodyPart: BodyPart.torso,
+                  selected: defendingBodyPart == BodyPart.torso,
+                  bodyPartSetter: selectDefendingBodyPart),
+              SizedBox(height: 16),
+              BodyPartButton(
+                  bodyPart: BodyPart.legs,
+                  selected: defendingBodyPart == BodyPart.legs,
+                  bodyPartSetter: selectDefendingBodyPart),
+            ],
+          ),
+        ),
+        SizedBox(width: 16),
+      ],
+    );
   }
 }
 
@@ -249,6 +264,45 @@ class BodyPartButton extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class GoButton extends StatelessWidget {
+  final VoidCallback onTap;
+  final Color color;
+
+  const GoButton({Key? key, required this.onTap, required this.color})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        SizedBox(width: 16),
+        Expanded(
+          child: GestureDetector(
+            onTap: onTap,
+            child: SizedBox(
+              height: 40,
+              child: ColoredBox(
+                color: color,
+                child: Center(
+                  child: Text(
+                    "Go".toUpperCase(),
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w900,
+                        color: Colors.white),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+        SizedBox(width: 16),
+      ],
     );
   }
 }
