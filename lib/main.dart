@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_fight_club/fight_club_colors.dart';
 
 void main() {
   runApp(MyApp());
@@ -22,8 +23,13 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  static const int maxLives = 5;
+
   BodyPart? attackingBodyPart;
   BodyPart? defendingBodyPart;
+
+  int yourLives = maxLives;
+  int enemyLives = maxLives;
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +38,11 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Column(
         children: [
           SizedBox(height: 40),
-          GameResultInfo(),
+          FightersInfo(
+            maxLivesCount: maxLives,
+            yourLivesCount: yourLives,
+            enemyLivesCount: enemyLives,
+          ),
           Expanded(child: SizedBox()),
           ControlBattlePanel(
             defendingBodyPart: defendingBodyPart,
@@ -90,7 +100,18 @@ class BodyPart {
   }
 }
 
-class GameResultInfo extends StatelessWidget {
+class FightersInfo extends StatelessWidget {
+  final int maxLivesCount;
+  final int yourLivesCount;
+  final int enemyLivesCount;
+
+  const FightersInfo(
+      {Key? key,
+      required this.maxLivesCount,
+      required this.yourLivesCount,
+      required this.enemyLivesCount})
+      : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -248,8 +269,9 @@ class BodyPartButton extends StatelessWidget {
             child: SizedBox(
               height: 40,
               child: ColoredBox(
-                color:
-                    selected ? Color.fromRGBO(28, 121, 206, 1) : Colors.black38,
+                color: selected
+                    ? Color.fromRGBO(28, 121, 206, 1)
+                    : FightClubColors.darkGreyText,
                 child: Center(
                   child: Text(
                     bodyPart.name.toUpperCase(),
@@ -294,7 +316,7 @@ class GoButton extends StatelessWidget {
                     style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w900,
-                        color: Colors.white),
+                        color: FightClubColors.whiteText),
                   ),
                 ),
               ),

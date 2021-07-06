@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -10,7 +8,8 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group("l03h01", () {
-    testWidgets('All texts have proper text color', (WidgetTester tester) async {
+    testWidgets('All texts have proper text color',
+        (WidgetTester tester) async {
       await tester.pumpWidget(MyApp());
 
       final Iterable<Text> allTextsWithGrey = [
@@ -48,7 +47,8 @@ void main() {
   });
 
   group('l03h02', () {
-    testWidgets('All Colors in Util Class FightClubColors', (WidgetTester tester) async {
+    testWidgets('All Colors in Util Class FightClubColors',
+        (WidgetTester tester) async {
       expect(
         FightClubColors.background,
         const Color.fromRGBO(213, 222, 240, 1),
@@ -82,12 +82,15 @@ void main() {
         (WidgetTester tester) async {
       await tester.pumpWidget(MyApp());
       final List<Row> rowWidgets = tester
-          .widgetList<Row>(
-              find.descendant(of: find.byType(FightersInfo), matching: find.byType(Row)))
+          .widgetList<Row>(find.descendant(
+              of: find.byType(FightersInfo), matching: find.byType(Row)))
           .toList();
-      final Row? rowWithTwoChildren = rowWidgets.firstWhereOrNull((e) => e.children.length == 2);
-      expect(rowWithTwoChildren, isNotNull, reason: "Cannot find Row with needed colors");
-      expect(rowWithTwoChildren!.crossAxisAlignment, CrossAxisAlignment.stretch);
+      final Row? rowWithTwoChildren =
+          rowWidgets.firstWhereOrNull((e) => e.children.length == 2);
+      expect(rowWithTwoChildren, isNotNull,
+          reason: "Cannot find Row with needed colors");
+      expect(
+          rowWithTwoChildren!.crossAxisAlignment, CrossAxisAlignment.stretch);
       expect(
         rowWithTwoChildren.children[0],
         isInstanceOf<Expanded>(),
@@ -97,7 +100,8 @@ void main() {
         isInstanceOf<ColoredBox>(),
       );
       expect(
-        ((rowWithTwoChildren.children[0] as Expanded).child as ColoredBox).color,
+        ((rowWithTwoChildren.children[0] as Expanded).child as ColoredBox)
+            .color,
         Colors.white,
       );
 
@@ -110,14 +114,16 @@ void main() {
         isInstanceOf<ColoredBox>(),
       );
       expect(
-        ((rowWithTwoChildren.children[1] as Expanded).child as ColoredBox).color,
+        ((rowWithTwoChildren.children[1] as Expanded).child as ColoredBox)
+            .color,
         Color(0xFFC5D1EA),
       );
     });
   });
 
   group('l03h04', () {
-    testWidgets('Centered box is expanded, has proper color and has proper size',
+    testWidgets(
+        'Centered box is expanded, has proper color and has proper size',
         (WidgetTester tester) async {
       void _testSizedBox(SizedBox sizedBox) {
         expect(sizedBox.width, double.infinity);
@@ -137,8 +143,8 @@ void main() {
       expect(safeArea.child, isInstanceOf<Column>());
 
       final Column topLevelColumn = safeArea.child as Column;
-      final Widget? possiblyExpanded =
-          topLevelColumn.children.firstWhereOrNull((element) => element is Expanded);
+      final Widget? possiblyExpanded = topLevelColumn.children
+          .firstWhereOrNull((element) => element is Expanded);
       expect(possiblyExpanded, isNotNull);
       expect(possiblyExpanded, isInstanceOf<Expanded>());
       final Expanded expanded = possiblyExpanded as Expanded;
@@ -179,22 +185,25 @@ void main() {
   });
 
   group('l03h05', () {
-    testWidgets('Correct avatars added to assets. Util class created. Avatars added to the scren',
-        (WidgetTester tester) async {
+    testWidgets(
+        'Correct avatars added to assets. Util class created. Avatars'
+        ' added to the screen', (WidgetTester tester) async {
       final String youAvatarPath = "assets/images/you-avatar.png";
       final String enemyAvatarPath = "assets/images/enemy-avatar.png";
 
       final yourData = await rootBundle.load(youAvatarPath);
       final yourBuffer = yourData.buffer;
-      final yourBytes = yourBuffer.asUint8List(yourData.offsetInBytes, yourData.lengthInBytes);
+      final yourBytes = yourBuffer.asUint8List(
+          yourData.offsetInBytes, yourData.lengthInBytes);
       final yourMd5checksum = md5.convert(yourBytes);
       expect(yourMd5checksum.toString(), "b740ac516bd8fb9950654185ce9241c4");
 
-      final enemysData = await rootBundle.load(enemyAvatarPath);
-      final enemysBuffer = enemysData.buffer;
-      final enemysBytes = enemysBuffer.asUint8List(enemysData.offsetInBytes, enemysData.lengthInBytes);
-      final enemysMd5checksum = md5.convert(enemysBytes);
-      expect(enemysMd5checksum.toString(), "98855f71fa4fd927e3789adebcddaf73");
+      final enemiesData = await rootBundle.load(enemyAvatarPath);
+      final enemiesBuffer = enemiesData.buffer;
+      final enemiesBytes = enemiesBuffer.asUint8List(
+          enemiesData.offsetInBytes, enemiesData.lengthInBytes);
+      final enemiesMd5checksum = md5.convert(enemiesBytes);
+      expect(enemiesMd5checksum.toString(), "98855f71fa4fd927e3789adebcddaf73");
 
       expect(FightClubImages.youAvatar, youAvatarPath);
       expect(FightClubImages.enemyAvatar, enemyAvatarPath);
@@ -233,7 +242,8 @@ void main() {
   });
 }
 
-Matcher isOneOrAnother(dynamic one, dynamic another) => OneOrAnotherMatcher(one, another);
+Matcher isOneOrAnother(dynamic one, dynamic another) =>
+    OneOrAnotherMatcher(one, another);
 
 class OneOrAnotherMatcher extends Matcher {
   final dynamic _one;
@@ -243,12 +253,13 @@ class OneOrAnotherMatcher extends Matcher {
 
   @override
   Description describe(Description description) {
-    return description
-        .add('either ${_one.runtimeType}:<$_one> or ${_another.runtimeType}:<$_another>');
+    return description.add(
+        'either ${_one.runtimeType}:<$_one> or ${_another.runtimeType}:<$_another>');
   }
 
   @override
-  bool matches(Object? item, Map matchState) => item == _one || item == _another;
+  bool matches(Object? item, Map matchState) =>
+      item == _one || item == _another;
 }
 
 extension MyIterable<T> on Iterable<T> {
