@@ -49,7 +49,6 @@ class MyHomePageState extends State<MyHomePage> {
       body: SafeArea(
         child: Column(
           children: [
-            SizedBox(height: 40),
             FightersInfo(
               maxLivesCount: maxLives,
               yourLivesCount: yourLives,
@@ -174,34 +173,85 @@ class FightersInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Row(
-          children: [
-            SizedBox(width: 16),
-            Expanded(child: Center(child: Text("You"))),
-            SizedBox(width: 12),
-            Expanded(child: Center(child: Text("Enemy"))),
-            SizedBox(width: 16),
-          ],
-        ),
-        SizedBox(height: 11),
-        Row(
-          children: [
-            SizedBox(width: 16),
-            LivesWidget(
-              overallLivesCount: maxLivesCount,
-              currentLivesCount: yourLivesCount,
+    return SizedBox(
+      height: 160,
+      child: Row(
+        children: [
+          Expanded(
+              child: ColoredBox(
+            color: FightClubColors.whiteText,
+            child: Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: LivesWidget(
+                    overallLivesCount: maxLivesCount,
+                    currentLivesCount: yourLivesCount,
+                  ),
+                ),
+                Column(
+                  children: [
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    Text("You"),
+                    const SizedBox(
+                      height: 12,
+                    ),
+                    ColoredBox(
+                      color: Colors.red,
+                      child: SizedBox(
+                        height: 92,
+                        width: 92,
+                      ),
+                    )
+                  ],
+                ),
+              ],
             ),
-            SizedBox(width: 12),
-            LivesWidget(
-              overallLivesCount: maxLivesCount,
-              currentLivesCount: enemyLivesCount,
+          )),
+          ColoredBox(
+              color: Colors.green,
+              child: SizedBox(
+                width: 44,
+                height: 44,
+              )),
+          Expanded(
+            child: ColoredBox(
+              color: FightClubColors.darkViolet,
+              child: Row(
+                children: [
+                  Column(
+                    children: [
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      Text("Enemy"),
+                      const SizedBox(
+                        height: 12,
+                      ),
+                      ColoredBox(
+                        color: Colors.blue,
+                        child: SizedBox(
+                          height: 92,
+                          width: 92,
+                        ),
+                      )
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: LivesWidget(
+                      overallLivesCount: maxLivesCount,
+                      currentLivesCount: enemyLivesCount,
+                    ),
+                  ),
+                ],
+              ),
             ),
-            SizedBox(width: 16),
-          ],
-        ),
-      ],
+          ),
+        ],
+      ),
     );
   }
 }
@@ -344,6 +394,9 @@ class BodyPartButton extends StatelessWidget {
                   child: Text(
                     bodyPart.name.toUpperCase(),
                     style: TextStyle(
+                      color: selected
+                          ? FightClubColors.whiteText
+                          : FightClubColors.darkGreyText,
                       fontWeight: FontWeight.w400,
                       fontSize: 13,
                     ),
