@@ -257,12 +257,6 @@ class FightersInfo extends StatelessWidget {
                   ],
                 ),
               )),
-              /*ColoredBox(
-                color: Colors.green,
-                child: SizedBox(
-                  width: 44,
-                  height: 44,
-                )),*/
               Expanded(
                 child: ColoredBox(
                   color: FightClubColors.darkViolet,
@@ -329,30 +323,22 @@ class LivesWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Column(
-        children: List.generate(overallLivesCount, (index) {
-          if (index < currentLivesCount) {
-            return Padding(
-              padding: const EdgeInsets.symmetric(vertical: 2),
-              child: Image.asset(
-                FightClubIcons.heartFull,
-                width: 18,
-                height: 18,
-              ),
-            );
-          } else {
-            return Padding(
-              padding: const EdgeInsets.symmetric(vertical: 2),
-              child: Image.asset(
-                FightClubIcons.heartEmpty,
-                width: 18,
-                height: 18,
-              ),
-            );
-          }
-        }),
-      ),
+    return Column(
+      children: List.generate(overallLivesCount, (index) {
+        String hearthPath;
+        if (index < currentLivesCount) {
+          hearthPath = FightClubIcons.heartFull;
+        } else {
+          hearthPath = FightClubIcons.heartEmpty;
+        }
+        return Padding(
+            padding: EdgeInsets.symmetric(vertical: 2),
+            child: Image.asset(
+              hearthPath,
+              width: 18,
+              height: 18,
+            ));
+      }),
     );
   }
 }
