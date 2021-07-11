@@ -42,7 +42,7 @@ class MyHomePageState extends State<MyHomePage> {
   BodyPart whatEnemyDefends = BodyPart.random();
 
   int yourLives = maxLives;
-  int enemyLives = maxLives;
+  int enemysLives = maxLives;
 
   String turnResult = "Start game";
 
@@ -56,7 +56,7 @@ class MyHomePageState extends State<MyHomePage> {
             FightersInfo(
               maxLivesCount: maxLives,
               yourLivesCount: yourLives,
-              enemyLivesCount: enemyLives,
+              enemyLivesCount: enemysLives,
             ),
             Expanded(
                 child: Padding(
@@ -115,7 +115,7 @@ class MyHomePageState extends State<MyHomePage> {
       turnResult = "Start new game";
       setState(() {
         yourLives = maxLives;
-        enemyLives = maxLives;
+        enemysLives = maxLives;
       });
     } else if (_isChoiceMade()) {
       setState(() {
@@ -123,7 +123,7 @@ class MyHomePageState extends State<MyHomePage> {
         final bool youLoseLife = defendingBodyPart != whatEnemyAttacks;
 
         if (enemyLoseLife) {
-          enemyLives -= 1;
+          enemysLives -= 1;
         }
         if (youLoseLife) {
           yourLives -= 1;
@@ -142,11 +142,11 @@ class MyHomePageState extends State<MyHomePage> {
 
   void _setTurnResultInfo() {
     turnResult = "";
-    if (yourLives == 0 && enemyLives == 0)
+    if (yourLives == 0 && enemysLives == 0)
       turnResult = "Draw";
     else if (yourLives == 0)
       turnResult = "Enemy won";
-    else if (enemyLives == 0)
+    else if (enemysLives == 0)
       turnResult = "You won";
     else {
       if (attackingBodyPart == whatEnemyDefends) {
@@ -174,7 +174,7 @@ class MyHomePageState extends State<MyHomePage> {
   }
 
   bool _isEndGame() {
-    return yourLives == 0 || enemyLives == 0;
+    return yourLives == 0 || enemysLives == 0;
   }
 
   bool _isChoiceMade() {
