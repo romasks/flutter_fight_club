@@ -58,7 +58,19 @@ class MyHomePageState extends State<MyHomePage> {
               yourLivesCount: yourLives,
               enemyLivesCount: enemysLives,
             ),
-            TurnResultPanel(turnResult: turnResult),
+            Expanded(
+                child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 16),
+              child: ColoredBox(
+                  color: FightClubColors.darkViolet,
+                  child: SizedBox.expand(
+                      child: Center(
+                    child: Text(
+                      turnResult,
+                      style: TextStyle(color: FightClubColors.darkGreyText),
+                    ),
+                  ))),
+            )),
             ControlBattlePanel(
               defendingBodyPart: defendingBodyPart,
               selectDefendingBodyPart: _selectDefendingBodyPart,
@@ -318,8 +330,7 @@ class LivesWidget extends StatelessWidget {
           hearthPath = FightClubIcons.heartEmpty;
         }
         return Padding(
-            padding:
-                EdgeInsets.only(bottom: index == overallLivesCount ? 0 : 4),
+            padding: EdgeInsets.symmetric(vertical: 2),
             child: Image.asset(
               hearthPath,
               width: 18,
@@ -327,31 +338,6 @@ class LivesWidget extends StatelessWidget {
             ));
       }),
     );
-  }
-}
-
-class TurnResultPanel extends StatelessWidget {
-  final String turnResult;
-
-  const TurnResultPanel({Key? key, required this.turnResult}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-        child: Padding(
-      padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 16),
-      child: ColoredBox(
-        color: FightClubColors.darkViolet,
-        child: SizedBox.expand(
-          child: Center(
-            child: Text(
-              turnResult,
-              style: TextStyle(color: FightClubColors.darkGreyText),
-            ),
-          ),
-        ),
-      ),
-    ));
   }
 }
 
