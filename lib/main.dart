@@ -229,7 +229,7 @@ class FightersInfo extends StatelessWidget {
                   children: [
                     Padding(
                       padding: const EdgeInsets.symmetric(
-                          vertical: 25, horizontal: 25),
+                          vertical: 27, horizontal: 25),
                       child: LivesWidget(
                         overallLivesCount: maxLivesCount,
                         currentLivesCount: yourLivesCount,
@@ -330,7 +330,8 @@ class LivesWidget extends StatelessWidget {
           hearthPath = FightClubIcons.heartEmpty;
         }
         return Padding(
-            padding: EdgeInsets.symmetric(vertical: 2),
+            padding:
+                EdgeInsets.only(bottom: index == overallLivesCount - 1 ? 0 : 4),
             child: Image.asset(
               hearthPath,
               width: 18,
