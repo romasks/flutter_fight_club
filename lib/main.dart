@@ -44,7 +44,7 @@ class MyHomePageState extends State<MyHomePage> {
   int yourLives = maxLives;
   int enemysLives = maxLives;
 
-  String turnResult = "Start game";
+  String turnResult = "";
 
   @override
   Widget build(BuildContext context) {
@@ -222,9 +222,14 @@ class FightersInfo extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              Expanded(child: ColoredBox(color: Colors.white)),
+              Expanded(child: ColoredBox(color: FightClubColors.darkViolet)),
+            ],
+          ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
               Expanded(
-                  child: ColoredBox(
-                color: Colors.white,
                 child: Row(
                   children: [
                     Padding(
@@ -241,8 +246,7 @@ class FightersInfo extends StatelessWidget {
                           padding: const EdgeInsets.only(top: 16, bottom: 12),
                           child: Text(
                             "You",
-                            style:
-                                TextStyle(color: FightClubColors.darkGreyText),
+                            style: TextStyle(color: FightClubColors.darkGreyText),
                           ),
                         ),
                         Image.asset(
@@ -254,52 +258,48 @@ class FightersInfo extends StatelessWidget {
                     ),
                   ],
                 ),
-              )),
+              ),
+              Align(
+                alignment: Alignment.center,
+                child: SizedBox(
+                  width: 44,
+                  height: 44,
+                  child: ColoredBox(color: Colors.green),
+                ),
+              ),
               Expanded(
-                child: ColoredBox(
-                  color: FightClubColors.darkViolet,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(top: 16, bottom: 12),
-                            child: Text(
-                              "Enemy",
-                              style: TextStyle(
-                                  color: FightClubColors.darkGreyText),
-                            ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(top: 16, bottom: 12),
+                          child: Text(
+                            "Enemy",
+                            style: TextStyle(color: FightClubColors.darkGreyText),
                           ),
-                          Image.asset(
-                            FightClubImages.enemyAvatar,
-                            height: 92,
-                            width: 92,
-                          )
-                        ],
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 25, horizontal: 25),
-                        child: LivesWidget(
-                          overallLivesCount: maxLivesCount,
-                          currentLivesCount: enemyLivesCount,
                         ),
+                        Image.asset(
+                          FightClubImages.enemyAvatar,
+                          height: 92,
+                          width: 92,
+                        )
+                      ],
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 25, horizontal: 25),
+                      child: LivesWidget(
+                        overallLivesCount: maxLivesCount,
+                        currentLivesCount: enemyLivesCount,
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ],
           ),
-          Align(
-            alignment: Alignment.center,
-            child: SizedBox(
-              width: 44,
-              height: 44,
-              child: ColoredBox(color: Colors.green),
-            ),
-          )
         ],
       ),
     );
