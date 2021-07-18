@@ -151,11 +151,11 @@ class MyHomePageState extends State<MyHomePage> {
       if (attackingBodyPart == whatEnemyDefends) {
         turnResult = "Your attack was blocked.";
       } else {
-        turnResult = "You hit enemy's " + attackingBodyPart!.name.toLowerCase() + ".";
+        turnResult = "You hit enemy\'s " + attackingBodyPart!.name.toLowerCase() + ".";
       }
       turnResult += "\n";
       if (whatEnemyAttacks == defendingBodyPart) {
-        turnResult += "Enemy's attack was blocked.";
+        turnResult += "Enemy\'s attack was blocked.";
       } else {
         turnResult += "Enemy hit your " + whatEnemyAttacks.name.toLowerCase() + ".";
       }
