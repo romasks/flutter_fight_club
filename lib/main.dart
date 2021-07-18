@@ -111,7 +111,7 @@ class MyHomePageState extends State<MyHomePage> {
 
   void _onGoButtonClick() {
     if (_isEndGame()) {
-      turnResult = 'Start new game';
+      turnResult = "Start new game";
       setState(() {
         yourLives = maxLives;
         enemysLives = maxLives;
@@ -140,24 +140,24 @@ class MyHomePageState extends State<MyHomePage> {
   }
 
   void _setTurnResultInfo() {
-    turnResult = '';
+    turnResult = "";
     if (yourLives == 0 && enemysLives == 0)
-      turnResult = 'Draw';
+      turnResult = "Draw";
     else if (yourLives == 0)
-      turnResult = 'Enemy won';
+      turnResult = "Enemy won";
     else if (enemysLives == 0)
-      turnResult = 'You won';
+      turnResult = "You won";
     else {
       if (attackingBodyPart == whatEnemyDefends) {
-        turnResult = 'Your attack was blocked.';
+        turnResult = "Your attack was blocked.";
       } else {
-        turnResult = 'You hit enemy\'s ' + attackingBodyPart!.name.toLowerCase() + '.';
+        turnResult = "You hit enemy's " + attackingBodyPart!.name.toLowerCase() + ".";
       }
-      turnResult += '\n';
+      turnResult += "\n";
       if (whatEnemyAttacks == defendingBodyPart) {
-        turnResult += 'Enemy\'s attack was blocked.';
+        turnResult += "Enemy's attack was blocked.";
       } else {
-        turnResult += 'Enemy hit your ' + whatEnemyAttacks.name.toLowerCase() + '.';
+        turnResult += "Enemy hit your " + whatEnemyAttacks.name.toLowerCase() + ".";
       }
     }
   }
