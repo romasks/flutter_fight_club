@@ -44,7 +44,9 @@ class MyHomePageState extends State<MyHomePage> {
   int yourLives = maxLives;
   int enemysLives = maxLives;
 
-  String turnResult = "";
+  List<Text> turnResultText = [];
+  TextStyle turnResultTextStyle =
+      TextStyle(fontSize: 12, color: FightClubColors.darkGreyText);
 
   @override
   Widget build(BuildContext context) {
@@ -64,12 +66,10 @@ class MyHomePageState extends State<MyHomePage> {
               child: ColoredBox(
                   color: FightClubColors.darkViolet,
                   child: SizedBox.expand(
-                      child: Center(
-                    child: Text(
-                      turnResult,
-                      style: TextStyle(color: FightClubColors.darkGreyText),
-                    ),
-                  ))),
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: turnResultText),
+                  )),
             )),
             ControlBattlePanel(
               defendingBodyPart: defendingBodyPart,
@@ -110,7 +110,7 @@ class MyHomePageState extends State<MyHomePage> {
 
   void _onGoButtonClick() {
     if (_isEndGame()) {
-      turnResult = "Start new game";
+      _addMessageToPanel("Start new game");
       setState(() {
         yourLives = maxLives;
         enemysLives = maxLives;
@@ -139,26 +139,30 @@ class MyHomePageState extends State<MyHomePage> {
   }
 
   void _setTurnResultInfo() {
-    turnResult = "";
+    turnResultText.clear();
     if (yourLives == 0 && enemysLives == 0)
-      turnResult = "Draw";
+      _addMessageToPanel("Draw");
     else if (yourLives == 0)
-      turnResult = "Enemy won";
+      _addMessageToPanel("Enemy won");
     else if (enemysLives == 0)
-      turnResult = "You won";
+      _addMessageToPanel("You won");
     else {
       if (attackingBodyPart == whatEnemyDefends) {
-        turnResult = "Your attack was blocked.";
+        _addMessageToPanel("Your attack was blocked.");
       } else {
-        turnResult = "You hit enemy's " + attackingBodyPart!.name + ".";
+        _addMessageToPanel("You hit enemy's " + attackingBodyPart!.name + ".");
       }
-      turnResult += "\n";
+      _addMessageToPanel("\n");
       if (whatEnemyAttacks == defendingBodyPart) {
-        turnResult += "Enemy's attack was blocked.";
+        _addMessageToPanel("Enemy's attack was blocked.");
       } else {
-        turnResult += "Enemy hit your " + attackingBodyPart!.name + ".";
+        _addMessageToPanel("Enemy hit your " + whatEnemyAttacks.name + ".");
       }
     }
+  }
+
+  void _addMessageToPanel(String message) {
+    turnResultText.add(Text(message, style: turnResultTextStyle));
   }
 
   Color _getGoButtonColor() {
@@ -246,7 +250,8 @@ class FightersInfo extends StatelessWidget {
                           padding: const EdgeInsets.only(top: 16, bottom: 12),
                           child: Text(
                             "You",
-                            style: TextStyle(color: FightClubColors.darkGreyText),
+                            style:
+                                TextStyle(color: FightClubColors.darkGreyText),
                           ),
                         ),
                         Image.asset(
@@ -277,7 +282,8 @@ class FightersInfo extends StatelessWidget {
                           padding: const EdgeInsets.only(top: 16, bottom: 12),
                           child: Text(
                             "Enemy",
-                            style: TextStyle(color: FightClubColors.darkGreyText),
+                            style:
+                                TextStyle(color: FightClubColors.darkGreyText),
                           ),
                         ),
                         Image.asset(
