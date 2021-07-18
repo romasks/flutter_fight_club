@@ -67,6 +67,7 @@ class MyHomePageState extends State<MyHomePage> {
                       child: Center(
                     child: Text(
                       turnResult,
+                      textAlign: TextAlign.center,
                       style: TextStyle(color: FightClubColors.darkGreyText),
                     ),
                   ))),
@@ -150,13 +151,13 @@ class MyHomePageState extends State<MyHomePage> {
       if (attackingBodyPart == whatEnemyDefends) {
         turnResult = "Your attack was blocked.";
       } else {
-        turnResult = "You hit enemy's " + attackingBodyPart!.name + ".";
+        turnResult = "You hit enemy's " + attackingBodyPart!.name.toLowerCase() + ".";
       }
       turnResult += "\n";
       if (whatEnemyAttacks == defendingBodyPart) {
         turnResult += "Enemy's attack was blocked.";
       } else {
-        turnResult += "Enemy hit your " + whatEnemyAttacks.name + ".";
+        turnResult += "Enemy hit your " + whatEnemyAttacks.name.toLowerCase() + ".";
       }
     }
   }
