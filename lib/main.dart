@@ -72,7 +72,7 @@ class MyHomePageState extends State<MyHomePage> {
                     ),
                   ))),
             )),
-            ControlBattlePanel(
+            ControlsWidget(
               defendingBodyPart: defendingBodyPart,
               selectDefendingBodyPart: _selectDefendingBodyPart,
               attackingBodyPart: attackingBodyPart,
@@ -111,8 +111,8 @@ class MyHomePageState extends State<MyHomePage> {
 
   void _onGoButtonClick() {
     if (_isEndGame()) {
-      turnResult = "Start new game";
       setState(() {
+        turnResult = "Start new game";
         yourLives = maxLives;
         enemysLives = maxLives;
       });
@@ -144,7 +144,7 @@ class MyHomePageState extends State<MyHomePage> {
     if (yourLives == 0 && enemysLives == 0)
       turnResult = "Draw";
     else if (yourLives == 0)
-      turnResult = "Enemy won";
+      turnResult = "You lost";
     else if (enemysLives == 0)
       turnResult = "You won";
     else {
@@ -343,14 +343,14 @@ class LivesWidget extends StatelessWidget {
   }
 }
 
-class ControlBattlePanel extends StatelessWidget {
+class ControlsWidget extends StatelessWidget {
   final BodyPart? defendingBodyPart;
   final ValueSetter<BodyPart> selectDefendingBodyPart;
 
   final BodyPart? attackingBodyPart;
   final ValueSetter<BodyPart> selectAttackingBodyPart;
 
-  const ControlBattlePanel({
+  const ControlsWidget({
     Key? key,
     required this.defendingBodyPart,
     required this.selectDefendingBodyPart,
