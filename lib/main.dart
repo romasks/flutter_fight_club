@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_fight_club/pages/fight_page.dart';
+import 'package:flutter_fight_club/pages/main_page.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 void main() {
@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: FightPage(),
+      home: MainPage(),
       theme: ThemeData(
         textTheme: GoogleFonts.pressStart2pTextTheme(
           Theme.of(context).textTheme,

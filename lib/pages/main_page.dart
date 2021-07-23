@@ -3,20 +3,24 @@ import 'package:flutter_fight_club/pages/fight_page.dart';
 import 'package:flutter_fight_club/resources/fight_club_colors.dart';
 import 'package:flutter_fight_club/widgets/action_button.dart';
 
-class MainPage extends StatefulWidget {
+class MainPage extends StatelessWidget {
   MainPage({Key? key}) : super(key: key);
 
   @override
-  _MainPageState createState() => _MainPageState();
+  Widget build(BuildContext context) {
+    return _MainPageContent();
+  }
 }
 
-class _MainPageState extends State<MainPage> {
+class _MainPageContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: FightClubColors.background,
       body: SafeArea(
         child: Column(
           children: [
+            SizedBox(height: 24),
             Text(
               "The\nFight\nClub".toUpperCase(),
               textAlign: TextAlign.center,
@@ -25,7 +29,7 @@ class _MainPageState extends State<MainPage> {
                 color: FightClubColors.blackButton,
               ),
             ),
-            SizedBox.expand(),
+            Expanded(child: SizedBox()),
             ActionButton(
               text: "Start",
               onTap: () {
@@ -36,7 +40,8 @@ class _MainPageState extends State<MainPage> {
                 );
               },
               color: FightClubColors.blackButton,
-            )
+            ),
+            SizedBox(height: 16)
           ],
         ),
       ),

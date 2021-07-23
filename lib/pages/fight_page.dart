@@ -10,10 +10,10 @@ class FightPage extends StatefulWidget {
   FightPage({Key? key}) : super(key: key);
 
   @override
-  _FightPageState createState() => _FightPageState();
+  FightPageState createState() => FightPageState();
 }
 
-class _FightPageState extends State<FightPage> {
+class FightPageState extends State<FightPage> {
   static const int maxLives = 5;
 
   BodyPart? attackingBodyPart;
@@ -65,7 +65,7 @@ class _FightPageState extends State<FightPage> {
             ),
             SizedBox(height: 14),
             ActionButton(
-              text: _isEndGame() ? "Start new game" : "Go",
+              text: _isEndGame() ? "Back" : "Go",
               onTap: _onGoButtonClick,
               color: _getGoButtonColor(),
             ),
@@ -97,9 +97,7 @@ class _FightPageState extends State<FightPage> {
   void _onGoButtonClick() {
     if (_isEndGame()) {
       setState(() {
-        turnResult = "Start new game";
-        yourLives = maxLives;
-        enemysLives = maxLives;
+        Navigator.of(context).pop();
       });
     } else if (_isChoiceMade()) {
       setState(() {
