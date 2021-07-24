@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: FightPage(),
+      home: MainPage(),
       theme: ThemeData(
         textTheme: GoogleFonts.pressStart2pTextTheme(
           Theme.of(context).textTheme,

@@ -215,8 +215,8 @@ class FightersInfo extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               Padding(
-                padding: const EdgeInsets.symmetric(
-                    vertical: 27, horizontal: 25),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 27, horizontal: 25),
                 child: LivesWidget(
                   overallLivesCount: maxLivesCount,
                   currentLivesCount: yourLivesCount,
@@ -228,8 +228,7 @@ class FightersInfo extends StatelessWidget {
                     padding: const EdgeInsets.only(top: 16, bottom: 12),
                     child: Text(
                       "You",
-                      style:
-                          TextStyle(color: FightClubColors.darkGreyText),
+                      style: TextStyle(color: FightClubColors.darkGreyText),
                     ),
                   ),
                   Image.asset(
@@ -260,8 +259,7 @@ class FightersInfo extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(top: 16, bottom: 12),
                     child: Text("Enemy",
-                        style: TextStyle(
-                            color: FightClubColors.darkGreyText)),
+                        style: TextStyle(color: FightClubColors.darkGreyText)),
                   ),
                   Image.asset(
                     FightClubImages.enemyAvatar,
@@ -271,8 +269,8 @@ class FightersInfo extends StatelessWidget {
                 ],
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(
-                    vertical: 25, horizontal: 25),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 25, horizontal: 25),
                 child: LivesWidget(
                   overallLivesCount: maxLivesCount,
                   currentLivesCount: enemyLivesCount,
