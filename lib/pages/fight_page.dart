@@ -6,6 +6,8 @@ import 'package:flutter_fight_club/resources/fight_club_colors.dart';
 import 'package:flutter_fight_club/resources/fight_club_icons.dart';
 import 'package:flutter_fight_club/resources/fight_club_images.dart';
 import 'package:flutter_fight_club/widgets/action_button.dart';
+import 'package:flutter_fight_club/widgets/fight_result.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class FightPage extends StatefulWidget {
   FightPage({Key? key}) : super(key: key);
@@ -94,9 +96,14 @@ class FightPageState extends State<FightPage> {
 
   void _onGoButtonClick() {
     if (_isEndGame()) {
-      setState(() {
-        Navigator.of(context).pop();
-      });
+      final FightResult? fightResult = FightResult.calculateResult(
+          yourLives, enemysLives);
+      if (fightResult != null) {
+        SharedPreferences.getInstance().then((prefs) {
+          prefs.setString("last_fight_result", fightResult.result);
+        });
+      }
+      Navigator.of(context).pop();
     } else if (_isChoiceMade()) {
       setState(() {
         final bool enemyLoseLife = attackingBodyPart != whatEnemyDefends;
@@ -183,11 +190,10 @@ class FightersInfo extends StatelessWidget {
   final int yourLivesCount;
   final int enemyLivesCount;
 
-  const FightersInfo(
-      {Key? key,
-      required this.maxLivesCount,
-      required this.yourLivesCount,
-      required this.enemyLivesCount})
+  const FightersInfo({Key? key,
+    required this.maxLivesCount,
+    required this.yourLivesCount,
+    required this.enemyLivesCount})
       : super(key: key);
 
   @override
@@ -216,7 +222,7 @@ class FightersInfo extends StatelessWidget {
             children: [
               Padding(
                 padding:
-                    const EdgeInsets.symmetric(vertical: 27, horizontal: 25),
+                const EdgeInsets.symmetric(vertical: 27, horizontal: 25),
                 child: LivesWidget(
                   overallLivesCount: maxLivesCount,
                   currentLivesCount: yourLivesCount,
@@ -270,7 +276,7 @@ class FightersInfo extends StatelessWidget {
               ),
               Padding(
                 padding:
-                    const EdgeInsets.symmetric(vertical: 25, horizontal: 25),
+                const EdgeInsets.symmetric(vertical: 25, horizontal: 25),
                 child: LivesWidget(
                   overallLivesCount: maxLivesCount,
                   currentLivesCount: enemyLivesCount,
@@ -292,7 +298,8 @@ class LivesWidget extends StatelessWidget {
     Key? key,
     required this.overallLivesCount,
     required this.currentLivesCount,
-  })  : assert(overallLivesCount >= 1),
+  })
+      : assert(overallLivesCount >= 1),
         assert(currentLivesCount >= 0),
         assert(currentLivesCount <= overallLivesCount),
         super(key: key);
