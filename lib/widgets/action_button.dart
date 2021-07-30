@@ -16,20 +16,17 @@ class ActionButton extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: GestureDetector(
         onTap: onTap,
-        child: SizedBox(
+        child: Container(
           height: 40,
-          child: ColoredBox(
-            color: color,
-            child: Center(
-              child: Text(
-                text.toUpperCase(),
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w900,
-                    color: FightClubColors.whiteText),
-              ),
-            ),
+          color: color,
+          alignment: Alignment.center,
+          child: Text(
+            text.toUpperCase(),
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w900,
+                color: FightClubColors.whiteText),
           ),
         ),
       ),
