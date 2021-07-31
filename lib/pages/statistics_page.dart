@@ -17,10 +17,9 @@ class StatisticsPage extends StatelessWidget {
         child: Column(
           children: [
             Container(
-              height: 40,
               margin: EdgeInsets.symmetric(horizontal: 16, vertical: 24),
               child: Text(
-                "Statistics".toUpperCase(),
+                "Statistics",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 24,
@@ -29,14 +28,14 @@ class StatisticsPage extends StatelessWidget {
               ),
             ),
             Expanded(child: SizedBox()),
-            /*Column(
+            Column(
               children: [
                 Text("Won: 22", textAlign: TextAlign.center, style: textStyle),
                 Text("Draw: 5", textAlign: TextAlign.center, style: textStyle),
                 Text("Lost: 15", textAlign: TextAlign.center, style: textStyle),
               ],
             ),
-            Expanded(child: SizedBox()),*/
+            Expanded(child: SizedBox()),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 16),
               child: SecondaryActionButton(
