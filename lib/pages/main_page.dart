@@ -20,8 +20,6 @@ class MainPage extends StatelessWidget {
 class _MainPageContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final FightResult fightResult = FightResult.won;
-
     return Scaffold(
       backgroundColor: FightClubColors.background,
       body: SafeArea(

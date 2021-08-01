@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_fight_club/resources/fight_club_colors.dart';
 import 'package:flutter_fight_club/widgets/secondary_action_button.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class StatisticsPage extends StatelessWidget {
   final TextStyle textStyle = TextStyle(
@@ -11,6 +12,8 @@ class StatisticsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+
     return Scaffold(
       backgroundColor: FightClubColors.background,
       body: SafeArea(
@@ -30,9 +33,57 @@ class StatisticsPage extends StatelessWidget {
             Expanded(child: SizedBox()),
             Column(
               children: [
-                Text("Won: 22", textAlign: TextAlign.center, style: textStyle),
-                Text("Draw: 5", textAlign: TextAlign.center, style: textStyle),
-                Text("Lost: 15", textAlign: TextAlign.center, style: textStyle),
+                FutureBuilder<int?>(
+                  future: _prefs.then((prefs) => prefs.getInt("stats_won")),
+                  builder: (context, snapshot) {
+                    int counterWons = 0;
+                    if (snapshot.hasData && snapshot.data != null) {
+                      counterWons = snapshot.data!;
+                    }
+                    return SizedBox(
+                      height: 40,
+                      child: Text(
+                        "Won: $counterWons",
+                        textAlign: TextAlign.center,
+                        style: textStyle,
+                      ),
+                    );
+                  },
+                ),
+                FutureBuilder<int?>(
+                  future: _prefs.then((prefs) => prefs.getInt("stats_draw")),
+                  builder: (context, snapshot) {
+                    int counterDraws = 0;
+                    if (snapshot.hasData && snapshot.data != null) {
+                      counterDraws = snapshot.data!;
+                    }
+                    return SizedBox(
+                      height: 40,
+                      child: Text(
+                        "Draw: $counterDraws",
+                        textAlign: TextAlign.center,
+                        style: textStyle,
+                      ),
+                    );
+                  },
+                ),
+                FutureBuilder<int?>(
+                  future: _prefs.then((prefs) => prefs.getInt("stats_lost")),
+                  builder: (context, snapshot) {
+                    int counterLosts = 0;
+                    if (snapshot.hasData && snapshot.data != null) {
+                      counterLosts = snapshot.data!;
+                    }
+                    return SizedBox(
+                      height: 40,
+                      child: Text(
+                        "Lost: $counterLosts",
+                        textAlign: TextAlign.center,
+                        style: textStyle,
+                      ),
+                    );
+                  },
+                ),
               ],
             ),
             Expanded(child: SizedBox()),

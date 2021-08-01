@@ -19,6 +19,11 @@ class FightPage extends StatefulWidget {
 class FightPageState extends State<FightPage> {
   static const int maxLives = 5;
 
+  Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+  late Future<int> _counterWon;
+  late Future<int> _counterDraw;
+  late Future<int> _counterLost;
+
   BodyPart? attackingBodyPart;
   BodyPart? defendingBodyPart;
 
@@ -29,6 +34,20 @@ class FightPageState extends State<FightPage> {
   int enemysLives = maxLives;
 
   String turnResult = "";
+
+  @override
+  void initState() {
+    super.initState();
+    _counterWon = _prefs.then((SharedPreferences prefs) {
+      return (prefs.getInt("stats_won") ?? 0);
+    });
+    _counterDraw = _prefs.then((SharedPreferences prefs) {
+      return (prefs.getInt("stats_draw") ?? 0);
+    });
+    _counterLost = _prefs.then((SharedPreferences prefs) {
+      return (prefs.getInt("stats_lost") ?? 0);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -94,14 +113,17 @@ class FightPageState extends State<FightPage> {
     });
   }
 
-  void _onGoButtonClick() {
+  void _onGoButtonClick() async {
     if (_isEndGame()) {
       final FightResult? fightResult = FightResult.calculateResult(
           yourLives, enemysLives);
       if (fightResult != null) {
-        SharedPreferences.getInstance().then((prefs) {
-          prefs.setString("last_fight_result", fightResult.result);
-        });
+        // SharedPreferences.getInstance().then((prefs) {
+        //   prefs.setString("last_fight_result", fightResult.result);
+        // });
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        await prefs.setString("last_fight_result", fightResult.result);
+        _incrementCounter(fightResult);
       }
       Navigator.of(context).pop();
     } else if (_isChoiceMade()) {
@@ -161,6 +183,27 @@ class FightPageState extends State<FightPage> {
 
   bool _isChoiceMade() {
     return attackingBodyPart != null && defendingBodyPart != null;
+  }
+
+  _incrementCounter(FightResult fightResult) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    switch (fightResult) {
+      case FightResult.won: {
+        int counterWon = (prefs.getInt("stats_won") ?? 0) + 1;
+        await prefs.setInt("stats_won", counterWon);
+        break;
+      }
+      case FightResult.draw: {
+        int counterDraw = (prefs.getInt("stats_draw") ?? 0) + 1;
+        await prefs.setInt("stats_draw", counterDraw);
+        break;
+      }
+      case FightResult.lost: {
+        int counterLost = (prefs.getInt("stats_lost") ?? 0) + 1;
+        await prefs.setInt("stats_lost", counterLost);
+        break;
+      }
+    }
   }
 }
 
