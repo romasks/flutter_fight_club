@@ -34,5 +34,6 @@ class FightResult {
     } else if (data == lost.result) {
       return lost;
     }
+    return null;
   }
 }
