@@ -40,24 +40,26 @@ class _MainPageContent extends StatelessWidget {
                 (prefs) => prefs.getString("last_fight_result"),
               ),
               builder: (context, snapshot) {
-                if (snapshot.hasData && snapshot.data != null) {
-                  return Column(
-                    children: [
-                      Text(
+                if (!snapshot.hasData || snapshot.data == null) {
+                  return const SizedBox();
+                }
+                return Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 12),
+                      child: Text(
                         "Last fight result",
                         style: TextStyle(
                           fontSize: 14,
                           color: FightClubColors.darkGreyText,
                         ),
                       ),
-                      SizedBox(height: 12),
-                      FightResultWidget(
-                        fightResult: FightResult.valueOf(snapshot.data!),
-                      ),
-                    ],
-                  );
-                }
-                return const SizedBox();
+                    ),
+                    FightResultWidget(
+                      fightResult: FightResult.valueOf(snapshot.data!),
+                    ),
+                  ],
+                );
               },
             ),
             Expanded(child: SizedBox()),

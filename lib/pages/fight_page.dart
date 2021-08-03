@@ -118,12 +118,10 @@ class FightPageState extends State<FightPage> {
       final FightResult? fightResult = FightResult.calculateResult(
           yourLives, enemysLives);
       if (fightResult != null) {
-        // SharedPreferences.getInstance().then((prefs) {
-        //   prefs.setString("last_fight_result", fightResult.result);
-        // });
-        SharedPreferences prefs = await SharedPreferences.getInstance();
-        await prefs.setString("last_fight_result", fightResult.result);
-        _incrementCounter(fightResult);
+        SharedPreferences.getInstance().then((prefs) {
+          prefs.setString("last_fight_result", fightResult.result);
+          _incrementCounter(fightResult);
+        });
       }
       Navigator.of(context).pop();
     } else if (_isChoiceMade()) {
