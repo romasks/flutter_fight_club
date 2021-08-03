@@ -4,7 +4,7 @@ import 'package:flutter_fight_club/resources/fight_club_images.dart';
 import 'package:flutter_fight_club/fight_result.dart';
 
 class FightResultWidget extends StatelessWidget {
-  final FightResult fightResult;
+  final FightResult? fightResult;
 
   const FightResultWidget({
     Key? key,
@@ -25,7 +25,8 @@ class FightResultWidget extends StatelessWidget {
                 child: DecoratedBox(
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
-                        colors: [Colors.white, FightClubColors.darkViolet]),
+                      colors: [Colors.white, FightClubColors.darkViolet],
+                    ),
                   ),
                 ),
               ),
@@ -47,7 +48,7 @@ class FightResultWidget extends StatelessWidget {
                   Image.asset(
                     FightClubImages.youAvatar,
                     height: 92,
-                    width: 92,
+                    width: 92
                   )
                 ],
               ),
@@ -55,7 +56,7 @@ class FightResultWidget extends StatelessWidget {
                 height: 44,
                 child: DecoratedBox(
                   decoration: BoxDecoration(
-                    color: fightResult.color,
+                    color: fightResult?.color,
                     borderRadius: BorderRadius.circular(22),
                     shape: BoxShape.rectangle,
                   ),
@@ -63,7 +64,7 @@ class FightResultWidget extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 12),
                     child: Center(
                       child: Text(
-                        fightResult.result,
+                        fightResult?.result ?? "",
                         style: TextStyle(color: Colors.white, fontSize: 16),
                       ),
                     ),

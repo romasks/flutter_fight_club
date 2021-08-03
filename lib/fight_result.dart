@@ -26,7 +26,7 @@ class FightResult {
     return null;
   }
 
-  static valueOf(String data) {
+  static valueOf(String? data) {
     if (data == won.result) {
       return won;
     } else if (data == draw.result) {

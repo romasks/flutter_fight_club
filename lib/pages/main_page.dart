@@ -56,7 +56,7 @@ class _MainPageContent extends StatelessWidget {
                       ),
                     ),
                     FightResultWidget(
-                      fightResult: FightResult.valueOf(snapshot.data!),
+                      fightResult: FightResult.valueOf(snapshot.data),
                     ),
                   ],
                 );
