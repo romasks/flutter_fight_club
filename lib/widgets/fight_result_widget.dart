@@ -14,7 +14,7 @@ class FightResultWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 160,
+      height: 140,
       child: Stack(
         children: [
           Row(
@@ -48,7 +48,7 @@ class FightResultWidget extends StatelessWidget {
                   Image.asset(
                     FightClubImages.youAvatar,
                     height: 92,
-                    width: 92
+                    width: 92,
                   )
                 ],
               ),
