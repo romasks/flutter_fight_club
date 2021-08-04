@@ -45,8 +45,8 @@ class _MainPageContent extends StatelessWidget {
                 }
                 return Column(
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 12),
+                    Container(
+                      margin: const EdgeInsets.only(bottom: 12),
                       child: Text(
                         "Last fight result",
                         style: TextStyle(
