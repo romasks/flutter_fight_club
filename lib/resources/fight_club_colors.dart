@@ -12,4 +12,8 @@ class FightClubColors {
   static const whiteText = Color(0xDDFFFFFF);
   static const darkViolet = Color(0xFFC5D1EA);
 
+  static const wonFightResult = Color(0xFF038800);
+  static const drawFightResult = Color(0xFF1C79CE);
+  static const lostFightResult = Color(0xFFEA2C2C);
+
 }

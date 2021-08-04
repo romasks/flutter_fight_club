@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_fight_club/resources/fight_club_colors.dart';
 
 class FightResult {
   final String result;
@@ -6,9 +7,9 @@ class FightResult {
 
   const FightResult._(this.result, this.color);
 
-  static const won = FightResult._("won", Colors.green);
-  static const draw = FightResult._("draw", Colors.blue);
-  static const lost = FightResult._("lost", Colors.red);
+  static const won = FightResult._("won", FightClubColors.wonFightResult);
+  static const draw = FightResult._("draw", FightClubColors.drawFightResult);
+  static const lost = FightResult._("lost", FightClubColors.lostFightResult);
 
   @override
   String toString() {
