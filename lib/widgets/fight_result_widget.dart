@@ -52,22 +52,18 @@ class FightResultWidget extends StatelessWidget {
                   )
                 ],
               ),
-              SizedBox(
+              Container(
                 height: 44,
-                child: DecoratedBox(
-                  decoration: BoxDecoration(
-                    color: fightResult?.color,
-                    borderRadius: BorderRadius.circular(22),
-                    shape: BoxShape.rectangle,
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 12),
-                    child: Center(
-                      child: Text(
-                        fightResult?.result ?? "",
-                        style: TextStyle(color: Colors.white, fontSize: 16),
-                      ),
-                    ),
+                padding: const EdgeInsets.symmetric(horizontal: 12),
+                decoration: BoxDecoration(
+                  color: fightResult?.color,
+                  borderRadius: BorderRadius.circular(22),
+                  shape: BoxShape.rectangle,
+                ),
+                child: Center(
+                  child: Text(
+                    fightResult?.result ?? "",
+                    style: TextStyle(color: Colors.white, fontSize: 16),
                   ),
                 ),
               ),
@@ -75,8 +71,10 @@ class FightResultWidget extends StatelessWidget {
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(top: 16, bottom: 12),
-                    child: Text("Enemy",
-                        style: TextStyle(color: FightClubColors.darkGreyText)),
+                    child: Text(
+                      "Enemy",
+                      style: TextStyle(color: FightClubColors.darkGreyText),
+                    ),
                   ),
                   Image.asset(
                     FightClubImages.enemyAvatar,
