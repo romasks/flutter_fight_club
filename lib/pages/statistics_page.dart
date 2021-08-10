@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_fight_club/fight_result.dart';
 import 'package:flutter_fight_club/resources/fight_club_colors.dart';
 import 'package:flutter_fight_club/widgets/secondary_action_button.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -12,8 +13,6 @@ class StatisticsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
-
     return Scaffold(
       backgroundColor: FightClubColors.background,
       body: SafeArea(
@@ -31,60 +30,30 @@ class StatisticsPage extends StatelessWidget {
               ),
             ),
             Expanded(child: SizedBox()),
-            Column(
-              children: [
-                FutureBuilder<int?>(
-                  future: _prefs.then((prefs) => prefs.getInt("stats_won")),
-                  builder: (context, snapshot) {
-                    int counterWons = 0;
-                    if (snapshot.hasData && snapshot.data != null) {
-                      counterWons = snapshot.data!;
-                    }
+            FutureBuilder<SharedPreferences>(
+              future: SharedPreferences.getInstance(),
+              builder: (context, snapshot) {
+                if (!snapshot.hasData || snapshot.data == null) {
+                  return SizedBox();
+                }
+                final SharedPreferences prefs = snapshot.data!;
+                return Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: FightResult.values.map((item) {
+                    int value = prefs.getInt("stats_${item.result}") ?? 0;
+                    String key =
+                        item.result[0].toUpperCase() + item.result.substring(1);
                     return SizedBox(
                       height: 40,
                       child: Text(
-                        "Won: $counterWons",
+                        "$key: $value",
                         textAlign: TextAlign.center,
                         style: textStyle,
                       ),
                     );
-                  },
-                ),
-                FutureBuilder<int?>(
-                  future: _prefs.then((prefs) => prefs.getInt("stats_draw")),
-                  builder: (context, snapshot) {
-                    int counterDraws = 0;
-                    if (snapshot.hasData && snapshot.data != null) {
-                      counterDraws = snapshot.data!;
-                    }
-                    return SizedBox(
-                      height: 40,
-                      child: Text(
-                        "Draw: $counterDraws",
-                        textAlign: TextAlign.center,
-                        style: textStyle,
-                      ),
-                    );
-                  },
-                ),
-                FutureBuilder<int?>(
-                  future: _prefs.then((prefs) => prefs.getInt("stats_lost")),
-                  builder: (context, snapshot) {
-                    int counterLosts = 0;
-                    if (snapshot.hasData && snapshot.data != null) {
-                      counterLosts = snapshot.data!;
-                    }
-                    return SizedBox(
-                      height: 40,
-                      child: Text(
-                        "Lost: $counterLosts",
-                        textAlign: TextAlign.center,
-                        style: textStyle,
-                      ),
-                    );
-                  },
-                ),
-              ],
+                  }).toList(),
+                );
+              },
             ),
             Expanded(child: SizedBox()),
             Padding(

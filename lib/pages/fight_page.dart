@@ -19,11 +19,6 @@ class FightPage extends StatefulWidget {
 class FightPageState extends State<FightPage> {
   static const int maxLives = 5;
 
-  Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
-  late Future<int> _counterWon;
-  late Future<int> _counterDraw;
-  late Future<int> _counterLost;
-
   BodyPart? attackingBodyPart;
   BodyPart? defendingBodyPart;
 
@@ -34,20 +29,6 @@ class FightPageState extends State<FightPage> {
   int enemysLives = maxLives;
 
   String turnResult = "";
-
-  @override
-  void initState() {
-    super.initState();
-    _counterWon = _prefs.then((SharedPreferences prefs) {
-      return (prefs.getInt("stats_won") ?? 0);
-    });
-    _counterDraw = _prefs.then((SharedPreferences prefs) {
-      return (prefs.getInt("stats_draw") ?? 0);
-    });
-    _counterLost = _prefs.then((SharedPreferences prefs) {
-      return (prefs.getInt("stats_lost") ?? 0);
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -120,7 +101,10 @@ class FightPageState extends State<FightPage> {
       if (fightResult != null) {
         SharedPreferences.getInstance().then((prefs) {
           prefs.setString("last_fight_result", fightResult.result);
-          _incrementCounter(fightResult);
+
+          String key = "stats_${fightResult.result}";
+          int counter = prefs.getInt(key) ?? 0;
+          prefs.setInt(key, counter + 1);
         });
       }
       Navigator.of(context).pop();
@@ -181,27 +165,6 @@ class FightPageState extends State<FightPage> {
 
   bool _isChoiceMade() {
     return attackingBodyPart != null && defendingBodyPart != null;
-  }
-
-  _incrementCounter(FightResult fightResult) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    switch (fightResult) {
-      case FightResult.won: {
-        int counterWon = (prefs.getInt("stats_won") ?? 0) + 1;
-        await prefs.setInt("stats_won", counterWon);
-        break;
-      }
-      case FightResult.draw: {
-        int counterDraw = (prefs.getInt("stats_draw") ?? 0) + 1;
-        await prefs.setInt("stats_draw", counterDraw);
-        break;
-      }
-      case FightResult.lost: {
-        int counterLost = (prefs.getInt("stats_lost") ?? 0) + 1;
-        await prefs.setInt("stats_lost", counterLost);
-        break;
-      }
-    }
   }
 }
 

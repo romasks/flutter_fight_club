@@ -10,6 +10,8 @@ class FightResult {
   static const won = FightResult._("won", FightClubColors.wonFightResult);
   static const draw = FightResult._("draw", FightClubColors.drawFightResult);
   static const lost = FightResult._("lost", FightClubColors.lostFightResult);
+  
+  static const values = [won, draw, lost];
 
   @override
   String toString() {
@@ -28,13 +30,6 @@ class FightResult {
   }
 
   static valueOf(String? data) {
-    if (data == won.result) {
-      return won;
-    } else if (data == draw.result) {
-      return draw;
-    } else if (data == lost.result) {
-      return lost;
-    }
-    return null;
+    return values.firstWhere((item) => item.result == data!);
   }
 }
